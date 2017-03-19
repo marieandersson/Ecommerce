@@ -1,7 +1,12 @@
-﻿
+﻿@model List<Ecommerce.Models.ProductsViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "All Records";
 }
 
-<h2>All products</h2>
+<h2>All Records</h2>
+
+@foreach (var record in Model)
+{
+    <a href="/products/details/@(record.Id)">@(record.Title)</a> <br />
+}
 
