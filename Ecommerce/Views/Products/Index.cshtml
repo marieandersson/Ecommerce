@@ -6,7 +6,8 @@
 <h2>All Records</h2>
 
 @foreach (var record in Model)
-{
+{   
+    <img src="@Url.Content("~/" + record.ImgUrl)" alt="@record.Title" />
     <a href="/products/details/@(record.Id)">@(record.Title)</a> <br />
 }
 
