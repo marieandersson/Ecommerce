@@ -5,9 +5,17 @@
 
 <h2>All Records</h2>
 
-@foreach (var record in Model)
-{   
-    <img src="@Url.Content("~/Content/" + record.ImgUrl)" alt="@record.Title" width="100" />
-    <a href="/products/details/@(record.Id)">@(record.Title)</a> <br />
-}
+    <div class="row">
+        @foreach (var record in Model)
+        {
+            <div class="col-4">
+                <a href="/products/details/@(record.Id)">
+                    <img src="@Url.Content("~/Content/" + record.ImgUrl)" alt="@record.Title" width="100" class="img-fluid" />
+                    <h3>@(record.Title)</h3>
+                    <p>@(record.Artist)</p>
+                    <p>@(record.Price)</p>
+                </a>
+            </div>
+        }
+    </div>
 

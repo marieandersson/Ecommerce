@@ -1,0 +1,45 @@
+﻿@model Ecommerce.Models.ProductsViewModel
+@{
+    ViewBag.Title = "AddProduct";
+}
+
+<h2>Add New Product</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(model => model.Title)
+        @Html.EditorFor(model => model.Title)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Artist)
+        @Html.EditorFor(model => model.Artist)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Format)
+        @Html.EditorFor(model => model.Format)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Description)
+        @Html.EditorFor(model => model.Description)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.ImgUrl)
+        @Html.EditorFor(model => model.ImgUrl)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Price)
+        @Html.EditorFor(model => model.Price)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Stock)
+        @Html.EditorFor(model => model.Stock)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Released)
+        @Html.EditorFor(model => model.Released, new { @class = "form-control", placeholder = "Name" })
+    </div>
+    <div>
+        <input type="submit" value="save" />
+    </div>
+}
