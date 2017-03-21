@@ -5,17 +5,25 @@
 
 <h2>All Records</h2>
 
+<div class="container-fluid">
     <div class="row">
         @foreach (var record in Model)
         {
-            <div class="col-4">
+            <div class="col-md-3">
                 <a href="/products/details/@(record.Id)">
-                    <img src="@Url.Content("~/Content/" + record.ImgUrl)" alt="@record.Title" width="100" class="img-fluid" />
+                    <img src="@Url.Content("~/Content/" + record.ImgUrl)" alt="@record.Title" class="img-fluid img-thumbnail" />
                     <h3>@(record.Title)</h3>
                     <p>@(record.Artist)</p>
                     <p>@(record.Price)</p>
                 </a>
+                <!-- add if in stock -->
+                @using (Html.BeginForm())
+                { 
+                    @Html.HiddenFor(model => record)
+                    <input type="number" name="orderQty" value="1" />
+                    <input type="Submit" value="Add to Cart"/>
+                }
             </div>
         }
     </div>
-
+</div>
