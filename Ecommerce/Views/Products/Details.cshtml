@@ -11,3 +11,9 @@
 <p>@Model.Stock</p>
 <p>@Model.Released</p>
 
+@using (Html.BeginForm("AddToCart", "Cart"))
+{
+    <input type="hidden" name="productId" value="@(Model.Id)" />
+    <input type="number" name="orderQty" value="1" />
+    <input type="Submit" value="Add to Cart" />
+}

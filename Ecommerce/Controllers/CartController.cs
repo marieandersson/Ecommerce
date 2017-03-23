@@ -64,14 +64,14 @@ namespace Ecommerce.Controllers
                 } 
                 else
                 {
-                    var insert = "UPDATE Carts SET Qty = Qty +1 WHERE ProductId = @productId AND CartId = @cartId";
+                    var update = "UPDATE Carts SET Qty = Qty +1 WHERE ProductId = @productId AND CartId = @cartId";
                     var parameters = new { cartId = cookieCartId, productId = productId};
-                    connection.Execute(insert, parameters);
+                    connection.Execute(update, parameters);
                 }
 
                 
             }
-            return RedirectToAction("Index", "Products");
+            return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
         // Remove product from Cart
@@ -80,7 +80,7 @@ namespace Ecommerce.Controllers
         {
             using (var connection = new SqlConnection(this.connectionString))
             {
-                var remove = "DELETE FROM Carts WHERE CartId = @cartId AND ProductId = productId";
+                var remove = "DELETE FROM Carts WHERE CartId = @cartId AND ProductId = @productId";
                 var parameters = new { productId = productId, cartId = cartId };
                 connection.Execute(remove, parameters);
             }
@@ -88,5 +88,17 @@ namespace Ecommerce.Controllers
             return RedirectToAction("Index");
         }
 
+        // Update Quantity on Cart View
+        [HttpPost]
+        public ActionResult UpdateProductQty(int productId, string cartId, int qty)
+        {
+            using (var connection = new SqlConnection(this.connectionString))
+            {
+                var update = "UPDATE Carts SET Qty = @qty WHERE CartId = @cartId AND ProductId = @productId";
+                var parameters = new { qty = qty, productId = productId, cartId = cartId };
+                connection.Execute(update, parameters);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

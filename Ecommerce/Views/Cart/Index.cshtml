@@ -15,8 +15,6 @@
             <h3>@(product.Title)</h3>
             <p>@(product.Artist)</p>
             <p>@(product.Price)</p>
-            <p>@(product.Qty)</p>
-          <!--  <p>@(product.Id)</p> -->
         </div>
         <div class="col-sm-2">
             @using (Html.BeginForm("RemoveFromCart", "Cart"))
@@ -25,6 +23,15 @@
                 <input type="hidden" name="cartId" value="@(product.CartId)" />
                 <input type="Submit" value="Remove from Cart" />
             }
+            @using (Html.BeginForm("UpdateProductQty", "Cart"))
+            {
+                <input type="hidden" name="productId" value="@(product.Id)" />
+                <input type="hidden" name="cartId" value="@(product.CartId)" />
+                <input type="number" name="qty" value="@(product.Qty)" />
+                <input type="Submit" value="Update Quantity" />
+
+            }
+
         </div>
     </div>
 }
