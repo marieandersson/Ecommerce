@@ -9,23 +9,27 @@
 
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
+    <header class="text-center">
+        <a href="/">
+            <img src="~/Content/Images/logo.jpg" alt="Championship Vinyl" />
+        </a>
+    </header>
+    <div class="navbar">   
+        <div class="container">       
+            <div class="navbar-header">                       
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Championship Vinyl", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </button>          
+              <!--  @Html.ActionLink("Championship vinyl", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) -->
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Records", "Index", "Products")</li>
-                    <li>@Html.ActionLink("Cart", "Index", "Cart")</li>
+                    <li>@Html.ActionLink("Shop Records", "Index", "Products")</li>
+                    <li>@Html.ActionLink("Your Cart", "Index", "Cart")</li>
                     <li>@Html.ActionLink("Checkout", "Index", "Checkout")</li>
                 </ul>
-              <!--  @Html.Partial("_LoginPartial") -->
             </div>
         </div>
     </div>
@@ -33,11 +37,13 @@
         @RenderBody()
         <hr />
         <footer>
+            <!--   
             <ul>
                 <li>@Html.ActionLink("About us", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            -->
+            <p>&copy; @DateTime.Now.Year - Championship Vinyl</p>
         </footer>
     </div>
 
