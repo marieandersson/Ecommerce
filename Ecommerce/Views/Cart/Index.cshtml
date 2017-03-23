@@ -1,7 +1,30 @@
-﻿
+﻿@model List<Ecommerce.Models.CartViewModel>
 @{
     ViewBag.Title = "Cart";
 }
 
 <h2>Your cart</h2>
 
+@foreach (var product in Model)
+{
+    <div class="row">
+        <div class="col-sm-2">
+            <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
+        </div>
+        <div class="col-sm-2">
+            <h3>@(product.Title)</h3>
+            <p>@(product.Artist)</p>
+            <p>@(product.Price)</p>
+            <p>@(product.Qty)</p>
+          <!--  <p>@(product.Id)</p> -->
+        </div>
+        <div class="col-sm-2">
+            @using (Html.BeginForm("RemoveFromCart", "Cart"))
+            {
+                <input type="hidden" name="productId" value="@(product.Id)" />
+                <input type="hidden" name="cartId" value="@(product.CartId)" />
+                <input type="Submit" value="Remove from Cart" />
+            }
+        </div>
+    </div>
+}

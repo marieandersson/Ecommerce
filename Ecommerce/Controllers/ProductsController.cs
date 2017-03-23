@@ -14,6 +14,7 @@ namespace Ecommerce.Controllers
     {
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["EcommerceDatabase"].ConnectionString;
         // GET: Products
+        [HttpGet]
         public ActionResult Index()
         {
             List<ProductsViewModel> Products;
@@ -39,6 +40,7 @@ namespace Ecommerce.Controllers
             }
             return View(singleProduct);
         }
+
     }
 
 }
