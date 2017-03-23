@@ -34,7 +34,7 @@ namespace Ecommerce.Controllers
         public ActionResult AddToCart(int productId, int orderQty)
         {
             string cookieCartId;
-            // check if customer already has a cart, then use existing cart id and add to same cart
+            // check if customer already has a cart
             if (Request.Cookies["CartId"] != null)
             {
                 cookieCartId = Request.Cookies["CartId"].Value;
@@ -52,6 +52,21 @@ namespace Ecommerce.Controllers
 
             using (var connection = new SqlConnection(this.connectionString))
             {
+                var checkStock = "SELECT Stock FROM Products WHERE Id = @productId";
+                var parameters = new { productId = productId };
+                var stock = connection.QuerySingleOrDefault<int>(checkStock, parameters);
+
+                if (stock < orderQty)
+                {
+                    // error msg not only "qty" in stock, change value
+                    return Redirect(Request.UrlReferrer.AbsolutePath);
+                }
+            }
+
+
+
+            using (var connection = new SqlConnection(this.connectionString))
+            {
                 var query = "SELECT Qty FROM Carts WHERE ProductId = @productId AND CartId = @cartId";
                 var p = new { productId = productId, cartId = cookieCartId };
                 var existingProduct = connection.QuerySingleOrDefault<ProductsViewModel>(query, p);
@@ -61,15 +76,15 @@ namespace Ecommerce.Controllers
                     var insert = "INSERT INTO Carts (CartId, ProductId, Qty) VALUES (@cartId, @productId, @qty)";
                     var parameters = new { cartId = cookieCartId, productId = productId, qty = orderQty };
                     connection.Execute(insert, parameters);
-                } 
+                }
                 else
                 {
                     var update = "UPDATE Carts SET Qty = Qty +1 WHERE ProductId = @productId AND CartId = @cartId";
-                    var parameters = new { cartId = cookieCartId, productId = productId};
+                    var parameters = new { cartId = cookieCartId, productId = productId };
                     connection.Execute(update, parameters);
                 }
 
-                
+
             }
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }

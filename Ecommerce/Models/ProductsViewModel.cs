@@ -14,7 +14,7 @@ namespace Ecommerce.Models
         public string Description { get; set; }
         public string ImgUrl { get; set; }
         public string Price { get; set; }
-        public string Stock { get; set; }
+        public int Stock { get; set; }
         public DateTime Released { get; set; }
     }
 }

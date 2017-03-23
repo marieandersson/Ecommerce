@@ -15,6 +15,7 @@
                     <h3>@(product.Title)</h3>
                     <p>@(product.Artist)</p>
                     <p>@(product.Price)</p>
+                    <p>@(product.Stock > 0?"In stock":"Out of stock")</p>
                 </a>
                 <!-- add if in stock. What if product sold out when cart turns to order? -->
                 @using (Html.BeginForm("AddToCart", "Cart"))
@@ -23,6 +24,7 @@
                     <input type="number" name="orderQty" value="1" />
                     <input type="Submit" value="Add to Cart"/>
                 }
+                <p>@Html.ValidationMessage("CustomError")</p>
             </div>
         }
     </div>
