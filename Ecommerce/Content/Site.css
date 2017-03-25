@@ -134,12 +134,31 @@ a:hover {
     width: 100%;
 }
 /* checkout */
-.checkoutWrap {
+.cartWrap, .checkoutWrap {
+    margin-top: 2em;
     width: 100%;
+}
+.bag {
+    border-right: 1px solid #ffe28a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+.bag button {
+    width: 150px;
+    align-self: flex-end;
+    margin-bottom: 1em;
+}
+.checkoutWrap h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #ffe28a;
 }
 .checkoutLineWrap {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
 }
 /* Admin */
 .addWrap form {

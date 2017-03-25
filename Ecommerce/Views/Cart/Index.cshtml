@@ -4,43 +4,44 @@
 }
 
 <h2>Your cart</h2>
-
-@foreach (var product in Model)
-{
-    <div class="row cartLineWrap">
-        <div class="cartInfoWrap">
-            <div class="cartImg">
-                <a href="/products/details/@(product.Id)">
-                    <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
-                </a>
+<div class="cartWrap">
+    @foreach (var product in Model)
+    {
+        <div class="row cartLineWrap">
+            <div class="cartInfoWrap">
+                <div class="cartImg">
+                    <a href="/products/details/@(product.Id)">
+                        <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
+                    </a>
+                </div>
+                <div class="cartInfo">
+                    <a href="/products/details/@(product.Id)">
+                        <h3>@(product.Title)</h3>
+                        <p>@(product.Artist)</p>
+                    </a>
+                    <p>$ @(product.Price)</p>
+                </div>
             </div>
-            <div class="cartInfo">
-                <a href="/products/details/@(product.Id)">
-                    <h3>@(product.Title)</h3>
-                    <p>@(product.Artist)</p>
-                </a>
-                <p>$ @(product.Price)</p>
+            <div class="cartForms">
+                @using (Html.BeginForm("UpdateProductQty", "Cart"))
+                {
+                    <input type="hidden" name="productId" value="@(product.Id)" />
+                    <input type="hidden" name="cartId" value="@(product.CartId)" />
+                    <input type="number" name="qty" value="@(product.Qty)" />
+                    <input type="Submit" value="Update Quantity" />
+                }
+                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                {
+                    <input type="hidden" name="productId" value="@(product.Id)" />
+                    <input type="hidden" name="cartId" value="@(product.CartId)" />
+                    <input type="Submit" value="Remove from Cart" />
+                }
+
             </div>
         </div>
-        <div class="cartForms">
-            @using (Html.BeginForm("UpdateProductQty", "Cart"))
-            {
-                <input type="hidden" name="productId" value="@(product.Id)" />
-                <input type="hidden" name="cartId" value="@(product.CartId)" />
-                <input type="number" name="qty" value="@(product.Qty)" />
-                <input type="Submit" value="Update Quantity" />
-            }
-            @using (Html.BeginForm("RemoveFromCart", "Cart"))
-            {
-                <input type="hidden" name="productId" value="@(product.Id)" />
-                <input type="hidden" name="cartId" value="@(product.CartId)" />
-                <input type="Submit" value="Remove from Cart" />
-            }
-
-        </div>
+    }
+    <div class="toCheckout">
+        <h4>Sum: @ViewBag.CartSum</h4>
+        <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>
     </div>
-}
-<div class="toCheckout">
-    <h4>Sum: @ViewBag.CartSum</h4>
-    <button>@Html.ActionLink("Checkout", "Index", "Checkout")</button>
 </div>
