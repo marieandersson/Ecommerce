@@ -27,7 +27,7 @@ textarea {
     max-width: 280px;
 }
 /* typography */
-h1, h2, h3, h4, h5, h5, p, li, a, input {
+h1, h2, h3, h4, h5, h5, p, li, a, input, label {
     font-family: "Courier New", Courier, monospace;
 }
 /* Set a tags to black color and no underline */
@@ -133,7 +133,19 @@ a:hover {
     border-top: 1px solid #ffe28a;
     width: 100%;
 }
-
+/* Admin */
+.addWrap form {
+    width: 300px;
+}
+.addWrap form div {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-bottom: 0.5em;
+}
+.addSave {
+    justify-content: flex-end !important;
+}
 
 @media screen and (min-width: 768px) {
     .navbar-nav {
