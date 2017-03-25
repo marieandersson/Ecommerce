@@ -133,6 +133,14 @@ a:hover {
     border-top: 1px solid #ffe28a;
     width: 100%;
 }
+/* checkout */
+.checkoutWrap {
+    width: 100%;
+}
+.checkoutLineWrap {
+    display: flex;
+    flex-direction: row;
+}
 /* Admin */
 .addWrap form {
     width: 300px;

@@ -10,6 +10,7 @@ namespace Ecommerce.Models
         // order info
         public string OrderId { get; set; }
         public string ProductId { get; set; }
+        public string Title { get; set; }
         public int Qty { get; set; }
         public float Price { get; set; }
         public float Sum { get; set; }
