@@ -76,3 +76,35 @@ a:hover {
     color: #666547;
     margin: 2em 0;
 }
+.recordWrap {
+    margin-bottom: 2em;
+}
+.img-thumbnail {
+    max-width: none;
+    width: 100%;
+}
+.recordWrap form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+} 
+.recordWrap input[type=number] {
+    width: 45px;
+    margin-right: 1em;
+    padding-left: 5px;
+}
+/* cart */
+.cartLineWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 1em 0;
+    width: 100%;
+}
+.cartLineWrap h3 {
+    margin: 0;
+}
+.cartForms {
+    text-align: right;
+}

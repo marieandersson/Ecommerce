@@ -9,12 +9,12 @@
     <div class="row">
         @foreach (var product in Model)
         {
-            <div class="col-md-3">
+            <div class="col-md-3 recordWrap">
                 <a href="/products/details/@(product.Id)">
                     <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid img-thumbnail" />
                     <h3>@(product.Title)</h3>
                     <p>@(product.Artist)</p>
-                    <p>@(product.Price)</p>
+                    <p>$ @(product.Price)</p>
                     <p>@(product.Stock > 0?"In stock":"Out of stock")</p>
                 </a>
                 <!-- add if in stock. What if product sold out when cart turns to order? -->

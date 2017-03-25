@@ -2,20 +2,26 @@
 @{
     ViewBag.Title = "Details";
 }
+<div class="row detailsWrap">
+    <div class="col-md-6">
+        <img src="@Url.Content("~/Content/" + Model.ImgUrl)" alt="@Model.Title" class="img-fluid img-thumbnail" />
+    </div>
+    <div class="col-md-6">
+        <h2>@Model.Title</h2>
+        <h3>@Model.Artist</h3>
+        <p>@Model.Format</p>
+        <p>@Model.Description</p>
+        <p>@Model.Price</p>
+        <p>@Model.Stock</p>
+        <p>@Model.Released</p>
+        <p>@(Model.Stock > 0 ? "In stock" : "Out of stock")</p>
 
-<img src="@Url.Content("~/Content/" + Model.ImgUrl)" alt="@Model.Title" class="img-fluid img-thumbnail" />
-<h2>@Model.Title</h2>
-<h3>@Model.Artist</h3>
-<p>@Model.Format</p>
-<p>@Model.Description</p>
-<p>@Model.Price</p>
-<p>@Model.Stock</p>
-<p>@Model.Released</p>
-<p>@(Model.Stock > 0 ? "In stock" : "Out of stock")</p>
 
-@using (Html.BeginForm("AddToCart", "Cart"))
-{
-    <input type="hidden" name="productId" value="@(Model.Id)" />
-    <input type="number" name="orderQty" value="1" />
-    <input type="Submit" value="Add to Cart" />
-}
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <input type="hidden" name="productId" value="@(Model.Id)" />
+            <input type="number" name="orderQty" value="1" />
+            <input type="Submit" value="Add to Cart" />
+        }
+    </div>
+</div>
