@@ -8,15 +8,21 @@
 @foreach (var product in Model)
 {
     <div class="row cartLineWrap">
-        <div class="col-sm-2">
-            <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
+        <div class="cartInfoWrap">
+            <div class="cartImg">
+                <a href="/products/details/@(product.Id)">
+                    <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
+                </a>
+            </div>
+            <div class="cartInfo">
+                <a href="/products/details/@(product.Id)">
+                    <h3>@(product.Title)</h3>
+                    <p>@(product.Artist)</p>
+                </a>
+                <p>$ @(product.Price)</p>
+            </div>
         </div>
-        <div class="col-sm-4">
-            <h3>@(product.Title)</h3>
-            <p>@(product.Artist)</p>
-            <p>$ @(product.Price)</p>
-        </div>
-        <div class="col-sm-6 cartForms">
+        <div class="cartForms">
             @using (Html.BeginForm("UpdateProductQty", "Cart"))
             {
                 <input type="hidden" name="productId" value="@(product.Id)" />

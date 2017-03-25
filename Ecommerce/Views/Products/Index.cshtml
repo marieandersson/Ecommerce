@@ -12,11 +12,14 @@
             <div class="col-md-3 recordWrap">
                 <a href="/products/details/@(product.Id)">
                     <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid img-thumbnail" />
+                </a>
+                <a href="/products/details/@(product.Id)">
                     <h3>@(product.Title)</h3>
                     <p>@(product.Artist)</p>
-                    <p>$ @(product.Price)</p>
-                    <p>@(product.Stock > 0?"In stock":"Out of stock")</p>
                 </a>
+                <p>$ @(product.Price)</p>
+                <p>@(product.Stock > 0 ? "In stock" : "Out of stock")</p>
+                
                 <!-- add if in stock. What if product sold out when cart turns to order? -->
                 @using (Html.BeginForm("AddToCart", "Cart"))
                 { 

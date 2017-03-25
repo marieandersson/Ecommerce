@@ -36,7 +36,9 @@ a {
 }
 a:hover {
     text-decoration: none;
+    color: #6fcb9f;
 }
+
 /* header and nav */
 .navbar-nav {
     width: 200px;
@@ -55,17 +57,8 @@ a:hover {
     font-size: 1.2em;
     margin: 0 0.5em;
 }
-@media screen and (min-width: 768px) {
-    .navbar-nav {
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-    }
-    .navbar {
-        position: relative;
-        top: auto;
-        right: auto;
-    }
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+  background-color: transparent;
 }
 .icon-bar {
     background-color: black;
@@ -96,7 +89,7 @@ a:hover {
 /* cart */
 .cartLineWrap {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     margin: 1em 0;
@@ -105,6 +98,53 @@ a:hover {
 .cartLineWrap h3 {
     margin: 0;
 }
+.cartImg img {
+    width: 150px;
+    height: 150px;
+}
+.cartInfoWrap {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 0.5em;
+}
+.cartInfo {  
+    margin-left: 1em;
+}
 .cartForms {
     text-align: right;
+    align-self: flex-end;
+}
+.cartForms input {
+    margin-bottom: 1em;
+}
+.cartForms input[type=number] {
+    width: 45px;
+    margin-right: 1em;
+    padding-left: 5px;
+}
+.cartForms input[type=submit] {
+    width: 150px;
+}
+
+
+@media screen and (min-width: 768px) {
+    .navbar-nav {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+    .navbar {
+        position: relative;
+        top: auto;
+        right: auto;
+    }
+    .cartLineWrap {
+        flex-direction: row;
+    }
+    .cartForms {
+        align-self: flex-start;
+    }
 }
