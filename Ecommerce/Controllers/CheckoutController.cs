@@ -32,8 +32,16 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public ActionResult submitOrder(CheckoutViewModel model)
+        public ActionResult submitOrder(string firstName, string lastName, string email, string phone, string street, string postalCode, string city)
         {
+            // handle payment?
+            // add customer to database. 
+            // get id (last inserted?)
+            // get cart id from cookie
+            // add order info to db
+            // update stock
+            // remove from cart db
+            // return thank you for your order page
             return View();
         }
     }

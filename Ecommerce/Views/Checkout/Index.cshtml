@@ -6,17 +6,17 @@
 <h2>Checkout</h2>
 <div class="row checkoutWrap">
     <div class="col-md-6 bag">
-        <h3>In your basket</h3>
-        <button>@Html.ActionLink("Edit your basket", "Index", "Cart")</button>
+        <h3>In your cart</h3>
+        <button>@Html.ActionLink("Edit your cart", "Index", "Cart")</button>
         @foreach (var product in Model)
         {
             <div class="row checkoutLineWrap">
                 <p>@product.Qty</p>
                 <p class="productLine">@product.Title</p>
-                <p>$ @(product.Price * product.Qty)</p>
+                <p>$@(product.Price * product.Qty)</p>
             </div>
         }
-        <h4 class="checkoutSum">Sum: @ViewBag.Sum</h4>
+        <h4 class="checkoutSum">Sum: $@ViewBag.Sum</h4>
     </div>
     <div class="col-md-6 info">
         <h3>Your Information</h3>

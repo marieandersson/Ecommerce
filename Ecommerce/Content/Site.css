@@ -81,7 +81,7 @@ a:hover {
     flex-direction: row;
     justify-content: flex-start;
 } 
-.recordWrap input[type=number] {
+.recordWrap input[type=number], .detailsWrap input[type=number] {
     width: 45px;
     margin-right: 1em;
     padding-left: 5px;
@@ -192,6 +192,13 @@ a:hover {
     width: 150px;
 }
 /* Admin */
+.adminLink a {
+    color: #6fcb9f;
+    text-decoration:underline;
+}
+.adminLink a:hover {
+    color: black;
+}
 .addWrap form {
     width: 300px;
 }

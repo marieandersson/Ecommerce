@@ -19,7 +19,7 @@
                         <h3>@(product.Title)</h3>
                         <p>@(product.Artist)</p>
                     </a>
-                    <p>$ @(product.Price)</p>
+                    <p>$@(product.Price)</p>
                 </div>
             </div>
             <div class="cartForms">
@@ -41,7 +41,7 @@
         </div>
     }
     <div class="toCheckout">
-        <h4>Sum: @ViewBag.CartSum</h4>
+        <h4>Sum: $@ViewBag.CartSum</h4>
         <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>
     </div>
 </div>

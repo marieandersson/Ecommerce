@@ -11,9 +11,8 @@
         <h3>@Model.Artist</h3>
         <p>@Model.Format</p>
         <p>@Model.Description</p>
-        <p>@Model.Price</p>
-        <p>@Model.Stock</p>
-        <p>@Model.Released</p>
+        <p>Release date: @Model.Released.ToString("yyyy-MM-dd")</p>
+        <p>$@Model.Price</p>
         <p>@(Model.Stock > 0 ? "In stock" : "Out of stock")</p>
 
 
