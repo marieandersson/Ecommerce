@@ -139,11 +139,11 @@ a:hover {
     width: 100%;
 }
 .bag {
-    border-right: 1px solid #ffe28a;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
+    margin-bottom: 2em;
+    border-right: none;
 }
 .bag button {
     width: 150px;
@@ -159,6 +159,37 @@ a:hover {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
+    margin: 0 0.5em;
+}
+.productLine {
+    flex-grow: 1;
+    margin-left: 1em;
+}
+.checkoutSum {
+    text-align: right;
+}
+.info form {
+    margin: 0 0.5em;
+}
+.info form div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0.5em;
+}
+.info form div label {
+    width: 100px;
+    text-align: right;
+    margin-right: 0.5em;
+}
+.info form .placeOrder {
+    justify-content: flex-end;
+    margin: 1em 0;
+}
+.placeOrder input {
+    background: #6fcb9f;
+    height: 40px;
+    width: 150px;
 }
 /* Admin */
 .addWrap form {
@@ -180,15 +211,23 @@ a:hover {
         justify-content: center;
         width: 100%;
     }
+
     .navbar {
         position: relative;
         top: auto;
         right: auto;
     }
+
     .cartLineWrap {
         flex-direction: row;
     }
+
     .cartForms {
         align-self: flex-start;
+    }
+}
+@media screen and (min-width: 992px) {
+    .bag {
+        border-right: 1px solid #ffe28a;
     }
 }

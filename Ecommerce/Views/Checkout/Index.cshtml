@@ -12,13 +12,51 @@
         {
             <div class="row checkoutLineWrap">
                 <p>@product.Qty</p>
-                <p>@product.Title</p>
-                <p>@product.Price</p>
+                <p class="productLine">@product.Title</p>
+                <p>$ @(product.Price * product.Qty)</p>
             </div>
         }
-        <h4>Sum: @ViewBag.Sum</h4>
+        <h4 class="checkoutSum">Sum: @ViewBag.Sum</h4>
     </div>
     <div class="col-md-6 info">
         <h3>Your Information</h3>
+
+        @using (Html.BeginForm("submitOrder", "Checkout"))
+        {
+            <div>
+                <label for="firstName">First Name: </label>
+                <input type="text" name="firstName" />
+            </div>
+            <div>
+                <label for="lastName">Last Name: </label>
+                <input type="text" name="lasttName" />
+            </div>
+            <div>
+                <label for="email">Email: </label>
+                <input type="text" name="email" />
+            </div>
+            <div>
+                <label for="phone">Phone: </label>
+                <input type="text" name="phone" />
+            </div>
+            <div>
+                <label for="street">Street: </label>
+                <input type="text" name="street" />
+            </div>
+            <div>
+                <label for="postalCode">Postal Code: </label>
+                <input type="text" name="postalCode" />
+            </div>
+            <div>
+                <label for="city">City: </label>
+                <input type="text" name="city" />
+            </div>
+
+            <div class="placeOrder" >
+                <input type="Submit" value="Place Order" />
+            </div>
+
+            
+        }
     </div>
 </div>

@@ -32,7 +32,7 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public ActionResult placeOrder()
+        public ActionResult submitOrder(CheckoutViewModel model)
         {
             return View();
         }

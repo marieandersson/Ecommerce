@@ -13,7 +13,6 @@ namespace Ecommerce.Models
         public string Title { get; set; }
         public int Qty { get; set; }
         public float Price { get; set; }
-        public float Sum { get; set; }
         // customer info
         public int Id { get; set; }
         public string FirstName { get; set; }
