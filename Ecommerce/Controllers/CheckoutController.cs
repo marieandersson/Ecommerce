@@ -32,16 +32,48 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public ActionResult submitOrder(string firstName, string lastName, string email, string phone, string street, string postalCode, string city)
+        public ActionResult SubmitOrder(string firstName, string lastName, string email, string phone, string street, string postalCode, string city, string orderStatus = "new")
         {
-            // handle payment?
-            // add customer to database. 
-            // get id (last inserted?)
-            // get cart id from cookie
-            // add order info to db
-            // update stock
-            // remove from cart db
-            // return thank you for your order page
+            var cartId = Request.Cookies["CartId"].Value;   
+            List<CheckoutViewModel> Products;
+            int customerId;
+        
+            using (var connection = new SqlConnection(this.connectionString))
+            {
+                // add customer to database
+                var insertCustomer = "INSERT INTO Customers (FirstName, LastName, Email, Phone, Street, PostalCode, City) VALUES (@firstName, @lastName, @email, @phone, @street, @postalCode, @city)";
+                var customerParameters = new { firstName = firstName, lastName = lastName, email = email, phone = phone, street = street, postalCode = postalCode, city = city };
+                connection.Execute(insertCustomer, customerParameters);
+
+                // NOT WORKING!
+                customerId = connection.Execute("SELECT MAX(Id) FROM Customers");
+
+                // add order to database
+                var insertOrder = "INSERT INTO Orders (CustomerId, OrderDate, OrderStatus) VALUES (@customerId, GETDATE(), @orderStatus)";
+                var orderParameters = new { customerId = customerId, orderStatus = orderStatus };
+                connection.Execute(insertOrder, orderParameters);
+
+                // get products from cart
+                var query = "SELECT ProductId FROM Carts WHERE CartId = @cartId";
+                var queryParameters = new { cartId = cartId }; 
+                Products = connection.Query<CheckoutViewModel>(query, queryParameters).ToList();
+
+            }
+                // add customer to database. 
+                // get id (last inserted?)
+                // get cart id from cookie
+                // add order info to db
+                // update stock
+                // remove from cart db and cookie
+                // return thank you for your order page
+                // add try and catch - allt måste gå igenom
+                return View("ConfirmOrder");
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmOrder()
+        {
+           
             return View();
         }
     }
