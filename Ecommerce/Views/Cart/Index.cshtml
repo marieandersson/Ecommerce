@@ -5,8 +5,10 @@
 
 <h2>Your cart</h2>
 <div class="cartWrap">
-    @foreach (var product in Model)
+    @if (Model != null)
     {
+        foreach (var product in Model)
+        {
         <div class="row cartLineWrap">
             <div class="cartInfoWrap">
                 <div class="cartImg">
@@ -44,4 +46,9 @@
         <h4>Sum: $@ViewBag.CartSum</h4>
         <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>
     </div>
+    } else
+    {
+        <h4 class="letsShop">Your cart is empty. @Html.ActionLink("Lets pick out some nice vinyl!", "Index", "Products")</h4>
+    }
+
 </div>

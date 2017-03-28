@@ -49,26 +49,42 @@ namespace Ecommerce.Controllers
                 connection.Execute(insertOrder);
 
                 // get products from cart
-                var query = "SELECT ProductId FROM Carts WHERE CartId = @cartId";
+                var query = "SELECT ProductId, Qty FROM Carts WHERE CartId = @cartId";
                 var queryParameters = new { cartId = cartId }; 
                 Products = connection.Query<CheckoutViewModel>(query, queryParameters).ToList();
 
+                // add order items to database
+                foreach (CheckoutViewModel CartItem in Products)
+                {
+                    var insertOrderItem = "INSERT INTO OrderItems (OrderId, ProductId, Qty) VALUES ((SELECT MAX(Id) FROM Orders), @productId, @qty)";
+                    var orderItemParameters = new { productId = CartItem.ProductId, qty = CartItem.Qty };
+                    connection.Execute(insertOrderItem, orderItemParameters);
+
+                    // update product stock
+                    var updateStock = "UPDATE Products SET Stock = Stock - @soldQty WHERE Id = @productId";
+                    var stockParameters = new { soldQty = CartItem.Qty, productId = CartItem.ProductId };
+                    connection.Execute(updateStock, stockParameters);
+                }
+
+                // remove cart from database
+                var deleteCart = "DELETE FROM Carts WHERE CartId = @cartId";
+                var cartIdParameter = new { cartId = cartId };
+                connection.Execute(deleteCart, cartIdParameter);
             }
-                // add customer to database. 
-                // get id (last inserted?)
-                // get cart id from cookie
-                // add order info to db
-                // update stock
-                // remove from cart db and cookie
-                // return thank you for your order page
-                // add try and catch - allt måste gå igenom
-                return View("ConfirmOrder");
+
+            // delete cart cookie
+            var CartCookie = new HttpCookie("CartId");
+            CartCookie.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Add(CartCookie);
+
+            return View("ConfirmOrder");
         }
 
         [HttpGet]
         public ActionResult ConfirmOrder()
         {
-           
+            // how to only show after placing order?
+            //var viewOrder = "SELECT Orders.Id, OrdersItems.Qty, Products.Title FROM Orders JOIN OrderItems ON Orders.Id = OrderItems.OrderId JOIN Products ON OrdersItems.ProductId = Products.Id WHERE Orders.Id";
             return View();
         }
     }

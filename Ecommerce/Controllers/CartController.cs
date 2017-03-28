@@ -18,16 +18,20 @@ namespace Ecommerce.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            string cartId = Request.Cookies["CartId"].Value;
-            List<CartViewModel> CartProducts;
-            using (var connection = new SqlConnection(this.connectionString))
+            if (Request.Cookies["CartId"] != null)
             {
-                var query = "SELECT * FROM Carts JOIN Products ON Carts.ProductId = Products.Id WHERE CartId = @cartId";
-                var parameters = new { cartId = cartId };
-                CartProducts = connection.Query<CartViewModel>(query, parameters).ToList();
-                ViewBag.CartSum = CartProducts.Sum(x => x.Price * x.Qty);
+                string cartId = Request.Cookies["CartId"].Value;
+                List<CartViewModel> CartProducts;
+                using (var connection = new SqlConnection(this.connectionString))
+                {
+                    var query = "SELECT * FROM Carts JOIN Products ON Carts.ProductId = Products.Id WHERE CartId = @cartId";
+                    var parameters = new { cartId = cartId };
+                    CartProducts = connection.Query<CartViewModel>(query, parameters).ToList();
+                    ViewBag.CartSum = CartProducts.Sum(x => x.Price * x.Qty);
+                }
+                return View(CartProducts);
             }
-            return View(CartProducts);
+            return View();
         }
 
         // Add product to Cart
