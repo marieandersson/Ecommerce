@@ -32,12 +32,11 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public ActionResult SubmitOrder(string firstName, string lastName, string email, string phone, string street, string postalCode, string city, string orderStatus = "new")
+        public ActionResult SubmitOrder(string firstName, string lastName, string email, string phone, string street, string postalCode, string city)
         {
             var cartId = Request.Cookies["CartId"].Value;   
             List<CheckoutViewModel> Products;
-            int customerId;
-        
+     
             using (var connection = new SqlConnection(this.connectionString))
             {
                 // add customer to database
@@ -45,13 +44,9 @@ namespace Ecommerce.Controllers
                 var customerParameters = new { firstName = firstName, lastName = lastName, email = email, phone = phone, street = street, postalCode = postalCode, city = city };
                 connection.Execute(insertCustomer, customerParameters);
 
-                // NOT WORKING!
-                customerId = connection.Execute("SELECT MAX(Id) FROM Customers");
-
                 // add order to database
-                var insertOrder = "INSERT INTO Orders (CustomerId, OrderDate, OrderStatus) VALUES (@customerId, GETDATE(), @orderStatus)";
-                var orderParameters = new { customerId = customerId, orderStatus = orderStatus };
-                connection.Execute(insertOrder, orderParameters);
+                var insertOrder = "INSERT INTO Orders (CustomerId, OrderDate, OrderStatus) VALUES ((SELECT MAX(Id) FROM Customers), GETDATE(), 'new')";
+                connection.Execute(insertOrder);
 
                 // get products from cart
                 var query = "SELECT ProductId FROM Carts WHERE CartId = @cartId";
