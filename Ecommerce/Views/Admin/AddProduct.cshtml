@@ -41,7 +41,13 @@
             @Html.EditorFor(model => model.Released)
         </div>
         <div class="addSave">
-            <input type="submit" value="save" />
+            <input type="submit" value="Save" />
         </div>
     }
+
+    @using (Html.BeginForm("Logout", "Admin"))
+    {
+        <input type="submit" value="Logout" />
+    }
+
 </div>

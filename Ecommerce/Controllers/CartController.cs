@@ -27,7 +27,6 @@ namespace Ecommerce.Controllers
                     var query = "SELECT * FROM Carts JOIN Products ON Carts.ProductId = Products.Id WHERE CartId = @cartId";
                     var parameters = new { cartId = cartId };
                     CartProducts = connection.Query<CartViewModel>(query, parameters).ToList();
-                    ViewBag.CartSum = CartProducts.Sum(x => x.Price * x.Qty);
                 }
                 return View(CartProducts);
             }

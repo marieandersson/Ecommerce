@@ -14,14 +14,42 @@ namespace Ecommerce.Controllers
     {
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["EcommerceDatabase"].ConnectionString;
         // GET: Admin
+        [HttpGet]
         public ActionResult Index()
         {
+            if (this.Session["login"] == null)
+            {
+                return View();
+            }
+            return RedirectToAction("AddProduct");
+        }
+
+        [HttpPost]
+        public ActionResult Index(AdminViewModel model)
+        {
+            AdminViewModel admin;
+            using (var connection = new SqlConnection(this.connectionString))
+            {
+                var getAdmin = "SELECT * FROM Admins WHERE username = @username AND password = @password";
+                var adminParameters = new { username = model.Username, password = model.Password };
+                admin = connection.QuerySingleOrDefault<AdminViewModel>(getAdmin, adminParameters);
+            }
+            
+            if (admin != null)
+            {
+                this.Session["login"] = model.Username;
+                return RedirectToAction("AddProduct");
+            } 
             return View();
         }
 
         [HttpGet]
         public ActionResult AddProduct()
         {
+            if (this.Session["login"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -35,6 +63,13 @@ namespace Ecommerce.Controllers
                 connection.Execute(insert, parameters);
             }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            Session.Remove("login");
+            return RedirectToAction("Index");
         }
     }
 }

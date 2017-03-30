@@ -43,7 +43,7 @@
         </div>
         }
     <div class="toCheckout">
-        <h4>Sum: $@ViewBag.CartSum</h4>
+        <h4>Sum: $@Model.Sum(x => x.Qty * x.Price)</h4>
         <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>
     </div>
     } else

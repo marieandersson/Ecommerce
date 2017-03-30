@@ -201,6 +201,7 @@ a:hover {
 /*Confirm order page */
 .thankYou {
     font-size: 1.3em;
+    line-height: 2;
     text-align: center;
     border-bottom: 1px solid #ffe28a;
 }
@@ -261,12 +262,12 @@ a:hover {
     .cartForms {
         align-self: flex-start;
     }
-    .thankYou {
-        font-size: 1.7em;
-    }
 }
 @media screen and (min-width: 992px) {
     .bag {
         border-right: 1px solid #ffe28a;
+    }
+    .thankYou {
+        font-size: 1.7em;
     }
 }

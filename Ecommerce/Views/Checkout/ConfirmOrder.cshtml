@@ -16,6 +16,6 @@
     }
 </div>
 <div class="orderSum">
-    <h5>Sum: $@ViewBag.CheckoutSum</h5>
+    <h5>Sum: $@Model.Sum(x => x.Qty * x.Price)</h5>
 </div>
 
