@@ -8,7 +8,7 @@ namespace Ecommerce.Models
     public class CheckoutViewModel
     {
         // order info
-        public string OrderId { get; set; }      
+        public int OrderId { get; set; }      
         public string Title { get; set; }
         public string OrderStatus { get; set; }
         // order item info

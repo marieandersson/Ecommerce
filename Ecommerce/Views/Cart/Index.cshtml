@@ -5,7 +5,7 @@
 
 <h2>Your cart</h2>
 <div class="cartWrap">
-    @if (Model != null)
+    @if (Model != null && Model.Any())
     {
         foreach (var product in Model)
         {
@@ -41,7 +41,7 @@
 
             </div>
         </div>
-    }
+        }
     <div class="toCheckout">
         <h4>Sum: $@ViewBag.CartSum</h4>
         <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>

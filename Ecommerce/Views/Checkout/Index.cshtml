@@ -5,6 +5,8 @@
 
 <h2>Checkout</h2>
 <div class="row checkoutWrap">
+    @if (Model != null && Model.Any())
+    {
     <div class="col-md-6 bag">
         <h3>In your cart</h3>
         <button>@Html.ActionLink("Edit your cart", "Index", "Cart")</button>
@@ -56,7 +58,11 @@
                 <input type="Submit" value="Place Order" />
             </div>
 
-            
+
         }
     </div>
+    } else
+    {
+        <h4 class="letsShop">There's nothing to checkout yet. @Html.ActionLink("Lets pick out some nice vinyl!", "Index", "Products")</h4>
+    }
 </div>

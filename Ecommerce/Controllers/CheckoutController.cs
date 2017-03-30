@@ -18,6 +18,10 @@ namespace Ecommerce.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (Request.Cookies["CartId"] == null)
+            {
+                return View();
+            }
             string cartId = Request.Cookies["CartId"].Value;
             List<CheckoutViewModel> CheckoutProducts;
             using (var connection = new SqlConnection(this.connectionString))
@@ -36,6 +40,7 @@ namespace Ecommerce.Controllers
         {
             var cartId = Request.Cookies["CartId"].Value;   
             List<CheckoutViewModel> Products;
+            int OrderId;
      
             using (var connection = new SqlConnection(this.connectionString))
             {
@@ -49,15 +54,15 @@ namespace Ecommerce.Controllers
                 connection.Execute(insertOrder);
 
                 // get products from cart
-                var query = "SELECT ProductId, Qty FROM Carts WHERE CartId = @cartId";
+                var query = "SELECT Carts.ProductId, Carts.Qty, Products.Price FROM Carts JOIN Products ON Carts.ProductId = Products.Id WHERE Carts.CartId = @cartId";
                 var queryParameters = new { cartId = cartId }; 
                 Products = connection.Query<CheckoutViewModel>(query, queryParameters).ToList();
 
                 // add order items to database
                 foreach (CheckoutViewModel CartItem in Products)
                 {
-                    var insertOrderItem = "INSERT INTO OrderItems (OrderId, ProductId, Qty) VALUES ((SELECT MAX(Id) FROM Orders), @productId, @qty)";
-                    var orderItemParameters = new { productId = CartItem.ProductId, qty = CartItem.Qty };
+                    var insertOrderItem = "INSERT INTO OrderItems (OrderId, ProductId, Qty, Price) VALUES ((SELECT MAX(Id) FROM Orders), @productId, @qty, @price)";
+                    var orderItemParameters = new { productId = CartItem.ProductId, qty = CartItem.Qty, price = CartItem.Price };
                     connection.Execute(insertOrderItem, orderItemParameters);
 
                     // update product stock
@@ -70,6 +75,10 @@ namespace Ecommerce.Controllers
                 var deleteCart = "DELETE FROM Carts WHERE CartId = @cartId";
                 var cartIdParameter = new { cartId = cartId };
                 connection.Execute(deleteCart, cartIdParameter);
+
+                // get order id for order confirmation
+                var getOrderId = "SELECT MAX(Id) FROM Orders";
+                OrderId = connection.QueryFirstOrDefault<int>(getOrderId);
             }
 
             // delete cart cookie
@@ -77,15 +86,22 @@ namespace Ecommerce.Controllers
             CartCookie.Expires = DateTime.Now.AddDays(-1);
             Response.Cookies.Add(CartCookie);
 
-            return View("ConfirmOrder");
+            return RedirectToAction("ConfirmOrder", new { OrderId = OrderId });
         }
 
         [HttpGet]
-        public ActionResult ConfirmOrder()
+        public ActionResult ConfirmOrder(int OrderId)
         {
-            // how to only show after placing order?
+            List<CheckoutViewModel> order;
+            using (var connection = new SqlConnection(this.connectionString))
+            {
+                var getOrderInfo = "SELECT OrderItems.Qty, OrderItems.Price, Products.Title FROM OrderItems JOIN Products ON OrderItems.ProductId = Products.Id WHERE OrderId = @orderId";
+                var orderIdParameter = new { orderId = OrderId };
+                order = connection.Query<CheckoutViewModel>(getOrderInfo, orderIdParameter).ToList();
+            }
+      
             //var viewOrder = "SELECT Orders.Id, OrdersItems.Qty, Products.Title FROM Orders JOIN OrderItems ON Orders.Id = OrderItems.OrderId JOIN Products ON OrdersItems.ProductId = Products.Id WHERE Orders.Id";
-            return View();
+            return View(order);
         }
     }
 }

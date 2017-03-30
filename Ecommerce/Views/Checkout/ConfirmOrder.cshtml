@@ -5,3 +5,10 @@
 
 <h2>Thank you for shopping at Championship vinyl!</h2>
 
+@foreach (var product in Model)
+{
+    <p>@product.Qty</p>
+    <p>@product.Title</p>
+    <p>@product.Price</p>
+}
+
