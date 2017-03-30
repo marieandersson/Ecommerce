@@ -4,18 +4,19 @@
 }
 
 <h2>Log in</h2>
-
-@using (Html.BeginForm())
-{
-    <div>
-        @Html.LabelFor(model => model.Username)
-        @Html.EditorFor(model => model.Username)
-    </div>
-    <div>
-        @Html.LabelFor(model => model.Password)
-        @Html.PasswordFor(model => model.Password)
-    </div>
-    <div>
-        <input type="submit" value="Login" />
-    </div>
-}
+<div class="loginWrap">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(model => model.Username)
+            @Html.EditorFor(model => model.Username)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Password)
+            @Html.PasswordFor(model => model.Password)
+        </div>
+        <div class="login">
+            <input type="submit" value="Login" />
+        </div>
+    }
+</div>

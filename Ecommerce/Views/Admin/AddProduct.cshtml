@@ -44,10 +44,11 @@
             <input type="submit" value="Save" />
         </div>
     }
-
-    @using (Html.BeginForm("Logout", "Admin"))
-    {
-        <input type="submit" value="Logout" />
-    }
+    <div class="logoutForm">
+        @using (Html.BeginForm("Logout", "Admin"))
+        {
+            <input type="submit" value="Logout" />
+        }
+    </div>
 
 </div>

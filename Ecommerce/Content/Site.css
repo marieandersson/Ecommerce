@@ -222,6 +222,11 @@ a:hover {
     margin-bottom: 3em;
  }
 /* Admin */
+.login {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
 .adminLink a {
     color: #6fcb9f;
     text-decoration:underline;
@@ -240,6 +245,12 @@ a:hover {
 }
 .addSave {
     justify-content: flex-end !important;
+}
+.logoutForm {
+    text-align:right;
+    border-top: 1px solid #ffe28a;
+    margin-top: 2em;
+    padding-top: 1em;
 }
 
 @media screen and (min-width: 768px) {
