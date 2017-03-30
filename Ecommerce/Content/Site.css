@@ -198,6 +198,28 @@ a:hover {
     height: 40px;
     width: 150px;
 }
+/*Confirm order page */
+.thankYou {
+    font-size: 1.3em;
+    text-align: center;
+    border-bottom: 1px solid #ffe28a;
+}
+.orderContent {
+    margin-top: 2em;
+    width: 300px;
+    border-bottom: 1px solid #ffe28a;
+}
+.orderRows {
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    justify-content: space-between;
+}
+.orderSum {
+    width: 300px;
+    text-align: right;
+    margin-bottom: 3em;
+ }
 /* Admin */
 .adminLink a {
     color: #6fcb9f;
@@ -238,6 +260,9 @@ a:hover {
 
     .cartForms {
         align-self: flex-start;
+    }
+    .thankYou {
+        font-size: 1.7em;
     }
 }
 @media screen and (min-width: 992px) {

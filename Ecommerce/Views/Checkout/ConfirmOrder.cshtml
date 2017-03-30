@@ -3,12 +3,19 @@
     ViewBag.Title = "Order Confirmation";
 }
 
-<h2>Thank you for shopping at Championship vinyl!</h2>
-
-@foreach (var product in Model)
-{
-    <p>@product.Qty</p>
-    <p>@product.Title</p>
-    <p>@product.Price</p>
-}
+<h2 class="thankYou">Thank you @Model.First().FirstName for shopping at Championship vinyl!</h2>
+<h4>Your Ordernumber is #@Model.First().Id</h4>
+<div class="orderContent">
+    @foreach (var product in Model)
+    {
+        <div class="orderRows">
+            <p>@product.Qty</p>
+            <p>@product.Title</p>
+            <p>$@product.Price</p>
+        </div>
+    }
+</div>
+<div class="orderSum">
+    <h5>Sum: $@ViewBag.CheckoutSum</h5>
+</div>
 

@@ -95,9 +95,10 @@ namespace Ecommerce.Controllers
             List<CheckoutViewModel> order;
             using (var connection = new SqlConnection(this.connectionString))
             {
-                var getOrderInfo = "SELECT OrderItems.Qty, OrderItems.Price, Products.Title FROM OrderItems JOIN Products ON OrderItems.ProductId = Products.Id WHERE OrderId = @orderId";
+                var getOrderInfo = "SELECT OrderItems.Qty, OrderItems.Price, Orders.Id, Products.Title, Customers.FirstName FROM OrderItems JOIN Products ON OrderItems.ProductId = Products.Id JOIN Orders ON OrderItems.OrderId = Orders.Id JOIN Customers ON Orders.CustomerId = Customers.Id WHERE OrderItems.OrderId = @orderId";
                 var orderIdParameter = new { orderId = OrderId };
                 order = connection.Query<CheckoutViewModel>(getOrderInfo, orderIdParameter).ToList();
+                ViewBag.CheckoutSum = order.Sum(x => x.Price * x.Qty);
             }
       
             //var viewOrder = "SELECT Orders.Id, OrdersItems.Qty, Products.Title FROM Orders JOIN OrderItems ON Orders.Id = OrderItems.OrderId JOIN Products ON OrdersItems.ProductId = Products.Id WHERE Orders.Id";
