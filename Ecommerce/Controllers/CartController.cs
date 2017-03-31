@@ -18,6 +18,10 @@ namespace Ecommerce.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            return View();
+        }
+        public ActionResult CartItems()
+        {
             if (Request.Cookies["CartId"] != null)
             {
                 string cartId = Request.Cookies["CartId"].Value;
@@ -96,27 +100,32 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public ActionResult RemoveFromCart(int productId, string cartId)
         {
+            var jsonResponse = new ChangeCartResponseModel();
             using (var connection = new SqlConnection(this.connectionString))
             {
                 var remove = "DELETE FROM Carts WHERE CartId = @cartId AND ProductId = @productId";
                 var parameters = new { productId = productId, cartId = cartId };
                 connection.Execute(remove, parameters);
             }
-
-            return RedirectToAction("Index");
+            jsonResponse.success = true;
+            jsonResponse.message = "The record has been removed.";
+            return Json(jsonResponse);
         }
 
         // Update Quantity on Cart View
         [HttpPost]
         public ActionResult UpdateProductQty(int productId, string cartId, int qty)
         {
+            var jsonResponse = new ChangeCartResponseModel();
             using (var connection = new SqlConnection(this.connectionString))
             {
                 var update = "UPDATE Carts SET Qty = @qty WHERE CartId = @cartId AND ProductId = @productId";
                 var parameters = new { qty = qty, productId = productId, cartId = cartId };
                 connection.Execute(update, parameters);
             }
-            return RedirectToAction("Index");
+            jsonResponse.success = true;
+            jsonResponse.message = "Your cart is updated.";
+            return Json(jsonResponse);
         }
     }
 }
