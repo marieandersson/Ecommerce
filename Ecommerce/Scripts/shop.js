@@ -16,7 +16,7 @@ function postToDatabase(productId, qty) {
     let postData = new FormData();
     postData.append("productId", productId);
     postData.append("orderQty", qty);
-    fetch('cart/AddToCart', 
+    fetch('/cart/AddToCart', 
     {
         method: "POST",
         body: postData,
@@ -24,7 +24,18 @@ function postToDatabase(productId, qty) {
     })
     .then(function (response) { return response.json();})
     .then(function (result) {
-        console.log(result);
-
+        let message = document.querySelector('.message');
+        if (result.success) {
+            message.classList.add('ok');
+            setTimeout(function () {
+                message.classList.remove('ok');
+            }, 5000);
+        } else {
+            message.classList.add('error');
+            setTimeout(function () {
+                message.classList.remove('error');
+            }, 5000);
+        }
+        document.querySelector('.message p').innerHTML = result.message;
     })
 }
