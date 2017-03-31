@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Cart";
 }
-
 <h2>Your cart</h2>
 <div class="cartWrap">
     @if (Model != null && Model.Any())
@@ -30,7 +29,7 @@
                     <input type="hidden" name="productId" value="@(product.Id)" />
                     <input type="hidden" name="cartId" value="@(product.CartId)" />
                     <input type="number" name="qty" value="@(product.Qty)" />
-                    <input type="Submit" value="Update Quantity" />
+                    <input type="Submit" class="updateQty" value="Update Quantity" />
                 }
                 @using (Html.BeginForm("RemoveFromCart", "Cart"))
                 {

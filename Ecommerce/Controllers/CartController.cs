@@ -37,6 +37,7 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public ActionResult AddToCart(int productId, int orderQty)
         {
+            var jsonResponse = new ChangeCartResponseModel();
             string cookieCartId;
             // check if customer already has a cart
             if (Request.Cookies["CartId"] != null)
@@ -62,35 +63,33 @@ namespace Ecommerce.Controllers
 
                 if (stock < orderQty)
                 {
-                    // error msg not only "qty" in stock, change value
-                    return Redirect(Request.UrlReferrer.AbsolutePath);
-                }
-            }
-
-
-
-            using (var connection = new SqlConnection(this.connectionString))
-            {
-                var query = "SELECT Qty FROM Carts WHERE ProductId = @productId AND CartId = @cartId";
-                var p = new { productId = productId, cartId = cookieCartId };
-                var existingProduct = connection.QuerySingleOrDefault<ProductsViewModel>(query, p);
-
-                if (existingProduct == null)
-                {
-                    var insert = "INSERT INTO Carts (CartId, ProductId, Qty) VALUES (@cartId, @productId, @qty)";
-                    var parameters = new { cartId = cookieCartId, productId = productId, qty = orderQty };
-                    connection.Execute(insert, parameters);
+                    jsonResponse.success = false;
+                    jsonResponse.message = "Sorry! We are out of stock.";
                 }
                 else
                 {
-                    var update = "UPDATE Carts SET Qty = Qty +1 WHERE ProductId = @productId AND CartId = @cartId";
-                    var parameters = new { cartId = cookieCartId, productId = productId };
-                    connection.Execute(update, parameters);
+                    var query = "SELECT Qty FROM Carts WHERE ProductId = @productId AND CartId = @cartId";
+                    var p = new { productId = productId, cartId = cookieCartId };
+                    var existingProduct = connection.QuerySingleOrDefault<ProductsViewModel>(query, p);
+
+                    if (existingProduct == null)
+                    {
+                        var insert = "INSERT INTO Carts (CartId, ProductId, Qty) VALUES (@cartId, @productId, @qty)";
+                        var insertParameters = new { cartId = cookieCartId, productId = productId, qty = orderQty };
+                        connection.Execute(insert, insertParameters);
+                    }
+                    else
+                    {
+                        var update = "UPDATE Carts SET Qty = Qty +1 WHERE ProductId = @productId AND CartId = @cartId";
+                        var updateParameters = new { cartId = cookieCartId, productId = productId };
+                        connection.Execute(update, updateParameters);
+                    }
+
+                    jsonResponse.success = true;
+                    jsonResponse.message = "Nice Choice! It's in your cart.";
                 }
-
-
-            }
-            return Redirect(Request.UrlReferrer.AbsolutePath);
+            }      
+            return Json(jsonResponse);
         }
 
         // Remove product from Cart

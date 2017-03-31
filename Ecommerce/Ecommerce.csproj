@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CartViewModel.cs" />
+    <Compile Include="Models\ChangeCartResponseModel.cs" />
     <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\ProductsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +210,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\shop.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

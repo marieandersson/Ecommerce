@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "All Records";
 }
-
+@section scripts{ <script type="text/javascript" src="~/scripts/shop.js"></script> }
 <h2 class="recordsHeading">Everything sounds better on vinyl.</h2>
 
 <div class="container-fluid">
@@ -23,9 +23,9 @@
                 <!-- add if in stock. What if product sold out when cart turns to order? -->
                 @using (Html.BeginForm("AddToCart", "Cart"))
                 { 
-                    <input type="hidden" name="productId" value="@(product.Id)" />
-                    <input type="number" name="orderQty" value="1" />
-                    <input type="Submit" value="Add to Cart"/>
+                    <input type="hidden" class="productId" name="productId" value="@(product.Id)" />
+                    <input type="number" class="addQty" name="orderQty" value="1" />
+                    <input type="Submit" class="addProduct" value="Add to Cart"/>
                 }
                 <p>@Html.ValidationMessage("CustomError")</p>
             </div>

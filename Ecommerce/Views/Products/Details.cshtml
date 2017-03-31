@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Details";
 }
+@section scripts{ <script type="text/javascript" src="~/scripts/shop.js"></script> }
 <div class="row detailsWrap">
     <div class="col-md-6">
         <img src="@Url.Content("~/Content/" + Model.ImgUrl)" alt="@Model.Title" class="img-fluid img-thumbnail" />
@@ -18,9 +19,9 @@
 
         @using (Html.BeginForm("AddToCart", "Cart"))
         {
-            <input type="hidden" name="productId" value="@(Model.Id)" />
-            <input type="number" name="orderQty" value="1" />
-            <input type="Submit" value="Add to Cart" />
+            <input type="hidden" class="productId" name="productId" value="@(Model.Id)" />
+            <input type="number" class="addQty" name="orderQty" value="1" />
+            <input type="Submit" class="addProduct" value="Add to Cart" />
         }
     </div>
 </div>

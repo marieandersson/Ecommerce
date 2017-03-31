@@ -62,7 +62,7 @@ namespace Ecommerce.Controllers
                 var parameters = new { title = model.Title, artist = model.Artist, format = model.Format, description = model.Description, imgurl = model.ImgUrl, price = model.Price, stock = model.Stock, released = model.Released };
                 connection.Execute(insert, parameters);
             }
-            return View();
+            return RedirectToAction("AddProduct");
         }
 
         [HttpPost]
