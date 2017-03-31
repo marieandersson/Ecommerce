@@ -23,6 +23,9 @@ function postToDatabase(postData, functionPath) {
             }, 5000);
         }
         document.querySelector('.message p').innerHTML = result.message;
+        if (functionPath != '/cart/AddToCart') {
+            updateCart();
+        }       
     })
 }
 
@@ -32,6 +35,8 @@ function updateCart() {
     .then(function (response) { return response.text(); })
     .then(function (result) {
         cartWrap.innerHTML = result;
+        addDeleteEventListener();
+        addUpdateEventListener();
     })
 }
 
@@ -48,33 +53,34 @@ addButtons.forEach(function (button) {
     })
 })
 
-let deleteButtons = document.querySelectorAll('.delete');
+function addDeleteEventListener() {
+    let deleteButtons = document.querySelectorAll('.delete');
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            let postData = new FormData();
+            postData.append('productId', button.parentElement.querySelector('.productId').value);
+            postData.append('cartId', button.parentElement.querySelector('.cartId').value);
 
-deleteButtons.forEach(function (button) {
-    button.addEventListener('click', function (event) {
-        event.preventDefault();
-        button.setAttribute("disabled", "true");
-        let postData = new FormData();
-        postData.append('productId', button.parentElement.querySelector('.productId').value);
-        postData.append('cartId', button.parentElement.querySelector('.cartId').value);
+            postToDatabase(postData, '/cart/RemoveFromCart');
+        })
+    })   
+}
+addDeleteEventListener();
 
-        postToDatabase(postData, '/cart/RemoveFromCart');
-        updateCart();    
+
+function addUpdateEventListener(button) {
+    let updateButtons = document.querySelectorAll('.updateQty');
+    updateButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            let postData = new FormData();
+            postData.append('productId', button.parentElement.querySelector('.productId').value);
+            postData.append('cartId', button.parentElement.querySelector('.cartId').value);
+            postData.append('qty', button.parentElement.querySelector('.qty').value);
+
+            postToDatabase(postData, '/cart/UpdateProductQty');
+        })
     })
-})
-
-let updateButtons = document.querySelectorAll('.updateQty');
-
-updateButtons.forEach(function (button) {
-    button.addEventListener('click', function (event) {
-        button.setAttribute("disabled", "true");
-        event.preventDefault();     
-        let postData = new FormData();
-        postData.append('productId', button.parentElement.querySelector('.productId').value);
-        postData.append('cartId', button.parentElement.querySelector('.cartId').value);
-        postData.append('qty', button.parentElement.querySelector('.qty').value);
-
-        postToDatabase(postData, '/cart/UpdateProductQty');
-        updateCart();       
-    })
-})
+}
+addUpdateEventListener();
