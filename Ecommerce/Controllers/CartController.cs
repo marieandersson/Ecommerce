@@ -65,10 +65,15 @@ namespace Ecommerce.Controllers
                 var parameters = new { productId = productId };
                 var stock = connection.QuerySingleOrDefault<int>(checkStock, parameters);
 
-                if (stock < orderQty)
+                if (stock == 0)
                 {
                     jsonResponse.success = false;
                     jsonResponse.message = "Sorry! We are out of stock.";
+                }
+                else  if (orderQty > stock)
+                {
+                    jsonResponse.success = false;
+                    jsonResponse.message = "Sorry! We don't have that many in stock.";
                 }
                 else
                 {
