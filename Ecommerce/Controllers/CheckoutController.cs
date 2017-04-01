@@ -81,7 +81,7 @@ namespace Ecommerce.Controllers
                         products.Add(product);
                   
                     }
-                    productsReader.Close();
+                   // productsReader.Close();
 
                     // add order items to database
                     foreach (CheckoutViewModel CartItem in products)
@@ -105,24 +105,9 @@ namespace Ecommerce.Controllers
 
                     transaction.Commit();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
-                    Console.WriteLine("  Message: {0}", ex.Message);
-
-                    // Attempt to roll back the transaction.
-                    try
-                    {
-                        transaction.Rollback();
-                    }
-                    catch (Exception ex2)
-                    {
-                        // This catch block will handle any errors that may have occurred
-                        // on the server that would cause the rollback to fail, such as
-                        // a closed connection.
-                        Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                        Console.WriteLine("  Message: {0}", ex2.Message);
-                    }              
+                catch (Exception)
+                {    
+                    return View("Error");
                 }
             }
 
@@ -150,9 +135,13 @@ namespace Ecommerce.Controllers
                 var orderIdParameter = new { orderId = OrderId };
                 order = connection.Query<CheckoutViewModel>(getOrderInfo, orderIdParameter).ToList();
             }
-      
-            //var viewOrder = "SELECT Orders.Id, OrdersItems.Qty, Products.Title FROM Orders JOIN OrderItems ON Orders.Id = OrderItems.OrderId JOIN Products ON OrdersItems.ProductId = Products.Id WHERE Orders.Id";
+
             return View(order);
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        } 
     }
 }
