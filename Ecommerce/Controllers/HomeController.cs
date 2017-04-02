@@ -12,6 +12,10 @@ namespace Ecommerce.Controllers
         {
             return RedirectToAction("Index", "Products");
         }
+        public ActionResult Error()
+        {
+            return View();
+        }
 
         public ActionResult About()
         {

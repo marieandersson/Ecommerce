@@ -28,7 +28,7 @@ namespace Ecommerce.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Checkout");
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -51,7 +51,7 @@ namespace Ecommerce.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Checkout");
+                return RedirectToAction("Error", "Home");
             }
         }
 

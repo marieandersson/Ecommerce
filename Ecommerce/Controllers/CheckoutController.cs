@@ -37,7 +37,7 @@ namespace Ecommerce.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return RedirectToAction("Error", "Home");
             }
           
         }
@@ -120,7 +120,7 @@ namespace Ecommerce.Controllers
                 catch (Exception)
                 {
                     transaction.Rollback();
-                    return View("Error");
+                    return RedirectToAction("Error", "Home");
                 }
             }
 
@@ -152,13 +152,8 @@ namespace Ecommerce.Controllers
             { 
                 // to do: attach unique error message since the order has gone through,
                 // the exception only regards loading the confirmation
-                return View("Error");
+                return RedirectToAction("Error", "Home");
             }
         }
-
-        public ActionResult Error()
-        {
-            return View();
-        } 
     }
 }
