@@ -81,7 +81,7 @@ namespace Ecommerce.Controllers
                         products.Add(product);
                   
                     }
-                   // productsReader.Close();
+                    productsReader.Close();
 
                     // add order items to database
                     foreach (CheckoutViewModel CartItem in products)
@@ -103,20 +103,21 @@ namespace Ecommerce.Controllers
                     command.Parameters.AddWithValue("@cartIdToDelete", cartId);
                     command.ExecuteNonQuery();
 
+                    // get order id for order confirmation
+                    command.CommandText = "SELECT Id = MAX(Id) FROM Orders";
+                    orderId = Convert.ToInt32(command.ExecuteScalar());
+                        
+
                     transaction.Commit();
                 }
                 catch (Exception)
-                {    
+                {
+                    transaction.Rollback();
                     return View("Error");
                 }
             }
 
-            using (var connection = new SqlConnection(this.connectionString))
-            {
-                // get order id for order confirmation
-                var getOrderId = "SELECT MAX(Id) FROM Orders";
-                orderId = connection.Execute(getOrderId);
-            }
+   
             // delete cart cookie
             var CartCookie = new HttpCookie("CartId");
             CartCookie.Expires = DateTime.Now.AddDays(-1);
