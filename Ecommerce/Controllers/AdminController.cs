@@ -27,6 +27,7 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public ActionResult Index(AdminViewModel model)
         {
+            // to do: hash password
             AdminViewModel admin;
             try
             {

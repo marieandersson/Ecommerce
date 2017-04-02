@@ -45,6 +45,7 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public ActionResult SubmitOrder(string firstName, string lastName, string email, string phone, string street, string postalCode, string city)
         {
+            // to do: validate form input
             var cartId = Request.Cookies["CartId"].Value;   
             int orderId;
      
