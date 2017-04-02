@@ -2,49 +2,57 @@
 @{ 
     Layout = "";
 }
-@if (Model != null && Model.Any())
-{
-    foreach (var product in Model)
-    {
-        <div class="row cartLineWrap">
-            <div class="cartInfoWrap">
-                <div class="cartImg">
-                    <a href="/products/details/@(product.Id)">
-                        <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
-                    </a>
-                </div>
-                <div class="cartInfo">
-                    <a href="/products/details/@(product.Id)">
-                        <h3>@(product.Title)</h3>
-                        <p>@(product.Artist)</p>
-                    </a>
-                    <p>$@(product.Price)</p>
-                </div>
-            </div>
-            <div class="cartForms">
-                @using (Html.BeginForm("UpdateProductQty", "Cart"))
-                {
-                    <input type="hidden" class="productId" name="productId" value="@(product.Id)" />
-                    <input type="hidden" class="cartId" name="cartId" value="@(product.CartId)" />
-                    <input type="number" class="qty" name="qty" value="@(product.Qty)" />
-                    <input type="Submit" class="updateQty" value="Update Quantity" />
-                }
-                @using (Html.BeginForm("RemoveFromCart", "Cart"))
-                {
-                    <input type="hidden" class="productId" name="productId" value="@(product.Id)" />
-                    <input type="hidden" class="cartId" name="cartId" value="@(product.CartId)" />
-                    <input type="Submit" class="delete" value="Remove from Cart" />
-                }
 
-            </div>
-        </div>
-    }
-    <div class="toCheckout">
-        <h4>Sum: $<span class="sum">@Model.Sum(x => x.Qty * x.Price)</span></h4>
-        <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>
-    </div>
+@if (ViewBag.error != null)
+{
+    <p>@ViewBag.error</p>
 }
 else
 {
-    <h4 class="letsShop">Your cart is empty. @Html.ActionLink("Lets pick out some nice vinyl!", "Index", "Products")</h4>
+    if (Model != null && Model.Any())
+    {
+        foreach (var product in Model)
+        {
+            <div class="row cartLineWrap">
+                <div class="cartInfoWrap">
+                    <div class="cartImg">
+                        <a href="/products/details/@(product.Id)">
+                            <img src="@Url.Content("~/Content/" + product.ImgUrl)" alt="@product.Title" class="img-fluid" height="150" />
+                        </a>
+                    </div>
+                    <div class="cartInfo">
+                        <a href="/products/details/@(product.Id)">
+                            <h3>@(product.Title)</h3>
+                            <p>@(product.Artist)</p>
+                        </a>
+                        <p>$@(product.Price)</p>
+                    </div>
+                </div>
+                <div class="cartForms">
+                    @using (Html.BeginForm("UpdateProductQty", "Cart"))
+                    {
+                        <input type="hidden" class="productId" name="productId" value="@(product.Id)" />
+                        <input type="hidden" class="cartId" name="cartId" value="@(product.CartId)" />
+                        <input type="number" class="qty" name="qty" value="@(product.Qty)" />
+                        <input type="Submit" class="updateQty" value="Update Quantity" />
+                    }
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        <input type="hidden" class="productId" name="productId" value="@(product.Id)" />
+                        <input type="hidden" class="cartId" name="cartId" value="@(product.CartId)" />
+                        <input type="Submit" class="delete" value="Remove from Cart" />
+                    }
+
+                </div>
+            </div>
+        }
+        <div class="toCheckout">
+            <h4>Sum: $<span class="sum">@Model.Sum(x => x.Qty * x.Price)</span></h4>
+            <button>@Html.ActionLink("To Checkout", "Index", "Checkout")</button>
+        </div>
+    }
+    else
+    {
+        <h4 class="letsShop">Your cart is empty. @Html.ActionLink("Lets pick out some nice vinyl!", "Index", "Products")</h4>
+    }
 }

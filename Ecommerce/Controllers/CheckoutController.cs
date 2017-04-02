@@ -24,14 +24,21 @@ namespace Ecommerce.Controllers
             }
             string cartId = Request.Cookies["CartId"].Value;
             List<CheckoutViewModel> CheckoutProducts;
-            using (var connection = new SqlConnection(this.connectionString))
+            try
             {
-                var query = "SELECT Products.Id, Products.Title, Products.Price, Carts.Qty FROM Carts JOIN Products ON Carts.ProductId = Products.Id WHERE CartId = @cartId";
-                var parameters = new { cartId = cartId };
-                CheckoutProducts = connection.Query<CheckoutViewModel>(query, parameters).ToList();
-                ViewBag.Sum = CheckoutProducts.Sum(x => x.Price * x.Qty);
+                using (var connection = new SqlConnection(this.connectionString))
+                {
+                    var query = "SELECT Products.Id, Products.Title, Products.Price, Carts.Qty FROM Carts JOIN Products ON Carts.ProductId = Products.Id WHERE CartId = @cartId";
+                    var parameters = new { cartId = cartId };
+                    CheckoutProducts = connection.Query<CheckoutViewModel>(query, parameters).ToList();
+                    ViewBag.Sum = CheckoutProducts.Sum(x => x.Price * x.Qty);
+                }
+                return View(CheckoutProducts);
             }
-            return View(CheckoutProducts);
+            catch (Exception)
+            {
+                return View("Error");
+            }
           
         }
 
@@ -130,14 +137,23 @@ namespace Ecommerce.Controllers
         public ActionResult ConfirmOrder(int OrderId)
         {
             List<CheckoutViewModel> order;
-            using (var connection = new SqlConnection(this.connectionString))
+            try
             {
-                var getOrderInfo = "SELECT OrderItems.Qty, OrderItems.Price, Orders.Id, Products.Title, Customers.FirstName FROM OrderItems JOIN Products ON OrderItems.ProductId = Products.Id JOIN Orders ON OrderItems.OrderId = Orders.Id JOIN Customers ON Orders.CustomerId = Customers.Id WHERE OrderItems.OrderId = @orderId";
-                var orderIdParameter = new { orderId = OrderId };
-                order = connection.Query<CheckoutViewModel>(getOrderInfo, orderIdParameter).ToList();
-            }
+                using (var connection = new SqlConnection(this.connectionString))
+                {
+                    var getOrderInfo = "SELECT OrderItems.Qty, OrderItems.Price, Orders.Id, Products.Title, Customers.FirstName FROM OrderItems JOIN Products ON OrderItems.ProductId = Products.Id JOIN Orders ON OrderItems.OrderId = Orders.Id JOIN Customers ON Orders.CustomerId = Customers.Id WHERE OrderItems.OrderId = @orderId";
+                    var orderIdParameter = new { orderId = OrderId };
+                    order = connection.Query<CheckoutViewModel>(getOrderInfo, orderIdParameter).ToList();
+                }
 
-            return View(order);
+                return View(order);
+            }
+            catch (Exception)
+            { 
+                // to do: attach unique error message since the order has gone through,
+                // the exception only regards loading the confirmation
+                return View("Error");
+            }
         }
 
         public ActionResult Error()
