@@ -105,6 +105,8 @@ namespace Ecommerce.Controllers
                         command.Parameters.AddWithValue("@soldQty", CartItem.Qty);
                         command.Parameters.AddWithValue("@productStockId", CartItem.ProductId);
                         command.ExecuteNonQuery();
+
+                        command.Parameters.Clear();
                     }
                     // remove cart from database
                     command.CommandText = "DELETE FROM Carts WHERE CartId = @cartIdToDelete";
