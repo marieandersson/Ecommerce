@@ -18,27 +18,41 @@ namespace Ecommerce.Controllers
         public ActionResult Index()
         {
             List<ProductsViewModel> Products;
-            using (var connection = new SqlConnection(this.connectionString))
+            try
             {
-                Products = connection.Query<ProductsViewModel>("select * from Products").ToList();
+                using (var connection = new SqlConnection(this.connectionString))
+                {
+                    Products = connection.Query<ProductsViewModel>("select * from Products").ToList();
+                }
+                return View(Products);
             }
-            return View(Products);
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Checkout");
+            }
         }
 
         public ActionResult Details(string id)
         {
             ProductsViewModel singleProduct;
-            using (var connection = new SqlConnection(this.connectionString))
+            try
             {
-                var query = "select * from Products where id = @productId";
-                var parameters = new { productId = id };
-                singleProduct = connection.QuerySingleOrDefault<ProductsViewModel>(query, parameters);
+                using (var connection = new SqlConnection(this.connectionString))
+                {
+                    var query = "select * from Products where id = @productId";
+                    var parameters = new { productId = id };
+                    singleProduct = connection.QuerySingleOrDefault<ProductsViewModel>(query, parameters);
+                }
+                if (singleProduct == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(singleProduct);
             }
-            if (singleProduct == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error", "Checkout");
             }
-            return View(singleProduct);
         }
 
     }
