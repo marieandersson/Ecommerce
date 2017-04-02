@@ -33,7 +33,7 @@ else
                     {
                         <input type="hidden" class="productId" name="productId" value="@(product.Id)" />
                         <input type="hidden" class="cartId" name="cartId" value="@(product.CartId)" />
-                        <input type="number" class="qty" name="qty" value="@(product.Qty)" />
+                        <input type="number" class="qty" name="qty" min="1" value="@(product.Qty)" />
                         <input type="Submit" class="updateQty" value="Update Quantity" />
                     }
                     @using (Html.BeginForm("RemoveFromCart", "Cart"))

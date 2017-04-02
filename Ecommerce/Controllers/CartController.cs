@@ -151,12 +151,25 @@ namespace Ecommerce.Controllers
             {
                 using (var connection = new SqlConnection(this.connectionString))
                 {
-                    var update = "UPDATE Carts SET Qty = @qty WHERE CartId = @cartId AND ProductId = @productId";
-                    var parameters = new { qty = qty, productId = productId, cartId = cartId };
-                    connection.Execute(update, parameters);
-                }
-                jsonResponse.success = true;
-                jsonResponse.message = "Your cart is updated.";
+                    var checkStock = "SELECT Stock FROM Products WHERE Id = @productId";
+                    var parameters = new { productId = productId };
+                    var stock = connection.QuerySingleOrDefault<int>(checkStock, parameters);
+                    
+                    if (qty > stock)
+                    {
+                        jsonResponse.success = false;
+                        jsonResponse.message = "Sorry! We don't have that many in stock.";
+                    }
+                    else
+                    {
+                        var update = "UPDATE Carts SET Qty = @qty WHERE CartId = @cartId AND ProductId = @productId";
+                        var updateParameters = new { qty = qty, productId = productId, cartId = cartId };
+                        connection.Execute(update, updateParameters);
+
+                        jsonResponse.success = true;
+                        jsonResponse.message = "Your cart is updated.";
+                    }                 
+                }              
             }
             catch (Exception)
             {

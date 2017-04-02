@@ -20,7 +20,7 @@
         @using (Html.BeginForm("AddToCart", "Cart"))
         {
             <input type="hidden" class="productId" name="productId" value="@(Model.Id)" />
-            <input type="number" class="addQty" name="orderQty" value="1" />
+            <input type="number" class="addQty" name="orderQty" value="1" min="1" />
             <input type="Submit" class="addProduct" value="Add to Cart" />
         }
     </div>
